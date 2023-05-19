@@ -102,14 +102,16 @@ const data = await fetchData(url, { cache: 'no-cache' });
 
 // to fetch correct data from server according to entries given
 const getData = ({ entries, type }) => {
+    // store each arrOfKey in an obj
     const obj = {
         currencieKeys: [],
         languageKeys: []
     }
+
     switch (type) {
         case "currencie":
             for (const k in entries) {
-                // a single array of keys 
+                // to make an array of keys 
                 obj.currencieKeys.push(k);
             }
 
@@ -124,7 +126,7 @@ const getData = ({ entries, type }) => {
             }).join('') || 'Not found';
         case "language":
             for (const k in entries) {
-                // a single array of keys 
+                // to make an array of keys
                 obj.languageKeys.push(k);
             }
 
@@ -145,8 +147,6 @@ function showCountries(Countries) {
     // initial value
     let str = '';
     Countries.filter(Boolean).forEach((country) => {
-        // console.log(country?.borders);
-        // console.log(country?.currencies);
         str += `                        <div data-mode-element="true" class="country-information rounded countries items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden lg:flex-row flex-col dark:darkElementColor shadow-[0px_0px_14px_rgba(0,0,0,0.2)] shadow-grey-50">
                     <button data-mode-element="true" type="button"
                         class="hidden backBtn top-28 px-8 py-2 bg-white-700 shadow-sm shadow-dark-gray-700 rounded-lg  dark:darkElementColor"
@@ -172,7 +172,7 @@ function showCountries(Countries) {
                                 <p><strong>Top Level Domain:</strong><span class="text-dark-gray-700">.be</span></p>
                                 <p><strong>Currencies:</strong> ${country?.currencies !== undefined && getData({ entries: country?.currencies, type: 'currencie' })}</p>
                                 <p><strong>Languages:</strong>
-                                ${country?.languages !== undefined && getData({ entries: country?.languages, type: 'language'})}
+                                ${country?.languages !== undefined && getData({ entries: country?.languages, type: 'language' })}
                                 </p>
                             </div>
                         </div>
@@ -218,6 +218,7 @@ countriesFlags.forEach((flag) => {
     flag.addEventListener('click', (e) => {
         // countries section
         // const countrySec = e.target.parentElement.parentElement.parentElement;
+
         // disable scrollToTopBtn
         scrollToTopBtn.classList.add('hidden');
         // country-information section
@@ -546,13 +547,45 @@ function getSuggestionValue(suggestions) {
 // scroll to top btn logic
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function () {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        scrollToTopBtn.classList.remove('hidden');
+    const informationElements = document.querySelectorAll(".country-information");
+    const informationArray = [...informationElements];
+
+    // check any of the img has fullscreen classs 
+    const hasFullScreenClass = informationArray.find((infoElement) => {
+        if (infoElement.classList.contains("fullscreen")) {
+            return true;
+        }
+    })
+
+    if (hasFullScreenClass) {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            // if it is fullscreen it doesn't need scroll btn
+            scrollToTopBtn.classList.add('hidden')
+        } else {
+            scrollToTopBtn.classList.add('hidden');
+        }
     } else {
-        scrollToTopBtn.classList.add('hidden');
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            // if it is fullscreen it doesn't need scroll btn
+            scrollToTopBtn.classList.remove('hidden')
+        } else {
+            scrollToTopBtn.classList.add('hidden');
+        }
     }
 };
 
+// if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+//     // if it is fullscreen it doesn't need scroll btn
+//     if (infoElement.classList.contains("fullscreen")) {
+//         console.log(infoElement.classList.contains("fullscreen"));
+//         scrollToTopBtn.classList.add('hidden')
+//     } else {
+//         scrollToTopBtn.classList.remove('hidden');
+//     }
+
+// } else {
+//     scrollToTopBtn.classList.add('hidden');
+// }
 // When the user clicks on the button, scroll to the top of the document
 scrollToTopBtn.onclick = function () {
     document.body.scrollTop = 0;
