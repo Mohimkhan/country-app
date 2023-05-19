@@ -93,15 +93,58 @@ async function fetchData(url, cacheObject = { cache: "no-store" }) {
 
 // fetching data (countries information) from the server 
 const data = await fetchData(url, { cache: 'no-cache' });
-// image fade in 
-const fadeIn = (img) => {
-    console.log(img);
+
+// languages.filter(Boolean).map((lang) => {
+//     if (country?.languages?.hasOwnProperty(lang)) {
+//         return `<span class="text-dark-gray-700">${country?.languages?.[lang] + " , "}</span>`
+//     }
+// }).join('') || `<span class="text-dark-gray-700">Not Found</span>`
+
+// to fetch correct data from server according to entries given
+const getData = ({ entries, type }) => {
+    const obj = {
+        currencieKeys: [],
+        languageKeys: []
+    }
+    switch (type) {
+        case "currencie":
+            for (const k in entries) {
+                // a single array of keys 
+                obj.currencieKeys.push(k);
+            }
+
+            // removing duplicate key from array
+            const newArrOfCurrencieKeys = [...new Set(obj.currencieKeys)];
+
+            return newArrOfCurrencieKeys.filter(Boolean).map((currencieKey) => {
+                if (entries.hasOwnProperty(currencieKey)) {
+                    // console.log(entries[currencieKey].name);
+                    return `<span class="text-dark-gray-700">${entries[currencieKey].name + " , "}</span>`
+                }
+            }).join('') || 'Not found';
+        case "language":
+            for (const k in entries) {
+                // a single array of keys 
+                obj.languageKeys.push(k);
+            }
+
+            // removing duplicate key from array
+            const newArrOfLanguageKeys = [...new Set(obj.languageKeys)];
+
+            return newArrOfLanguageKeys.filter(Boolean).map((languageKey) => {
+                if (entries.hasOwnProperty(languageKey)) {
+                    return `<span class="text-dark-gray-700">${entries[languageKey] + " , "}</span>`
+                }
+            }).join('') || `<span class="text-dark-gray-700">Not Found</span>`
+        default:
+            return entries;
+    }
 }
 // show all the information in the UI
 function showCountries(Countries) {
     // initial value
     let str = '';
-    Countries.forEach((country) => {
+    Countries.filter(Boolean).forEach((country) => {
         // console.log(country?.borders);
         // console.log(country?.currencies);
         str += `                        <div data-mode-element="true" class="country-information rounded countries items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden lg:flex-row flex-col dark:darkElementColor shadow-[0px_0px_14px_rgba(0,0,0,0.2)] shadow-grey-50">
@@ -127,32 +170,19 @@ function showCountries(Countries) {
                             </div>
                             <div class="additional-details hidden" data-detail="more">
                                 <p><strong>Top Level Domain:</strong><span class="text-dark-gray-700">.be</span></p>
-                                <p><strong>Currencies:</strong><span class="text-dark-gray-700"> ${allTheCurrencies.filter(Boolean).map((currencie) => {
-            if (country?.currencies?.hasOwnProperty(currencie)) {
-                // console.log(country?.currencies?.[currencie]?.name);
-                return country?.currencies?.[currencie]?.name
-            }
-        }).join('') || 'Not found'
-            }</span></p>
+                                <p><strong>Currencies:</strong> ${country?.currencies !== undefined && getData({ entries: country?.currencies, type: 'currencie' })}</p>
                                 <p><strong>Languages:</strong>
-                                ${languages.filter(Boolean).map((lang) => {
-                country?.languages?.[lang]
-                if (country?.languages?.hasOwnProperty(lang)) {
-                    // console.log(country?.languages?.[lang]);
-                    return `<span class="text-dark-gray-700">${country?.languages?.[lang] + ","}</span>`
-                }
-            }).join('') || `<span class="text-dark-gray-700">Not Found</span>`
-            }
+                                ${country?.languages !== undefined && getData({ entries: country?.languages, type: 'language'})}
                                 </p>
                             </div>
                         </div>
                         <p class="mt-10 hidden BorderCountry flex items-center flex-wrap gap-2 pb-12 lg:pb-0" data-detail="more">
                             <strong>Border Countries:</strong> ${country?.borders !== undefined ? country?.borders.map((bor) => {
-                // console.log(bor);
-                return `<span data-mode-element="true"
+            // console.log(bor);
+            return `<span data-mode-element="true"
                                     class="text-dark-gray-700 px-8 py-2 bg-white-700 shadow-sm shadow-dark-gray-700 rounded-md  dark:darkElementColor">${bor}
                                     </span>`;
-            }).join("") : `<span data-mode-element="true"
+        }).join("") : `<span data-mode-element="true"
                           class="text-dark-gray-700 px-8 py-2 bg-white-700 shadow-sm shadow-dark-gray-700 rounded-md  dark:darkElementColor"> Not Found
                           </span>`
             }
@@ -188,6 +218,8 @@ countriesFlags.forEach((flag) => {
     flag.addEventListener('click', (e) => {
         // countries section
         // const countrySec = e.target.parentElement.parentElement.parentElement;
+        // disable scrollToTopBtn
+        scrollToTopBtn.classList.add('hidden');
         // country-information section
         const information = e.target.parentElement.parentElement;
         // console.log(information);
@@ -227,6 +259,8 @@ backBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
         // console.log(`It has been clicked`);
         // const countrySec = e.parentElement.parentElement;
+        // disable scrollToTopBtn
+        scrollToTopBtn.classList.remove('hidden');
         // country-information section
         const information = e.currentTarget.parentElement;
         // console.log(information);
@@ -260,49 +294,6 @@ filterUl.addEventListener('click', () => {
     // to rotate
     filterIcon.classList.toggle('rotate-180');
 });
-
-
-// darkAndLightBtn.addEventListener('click', themeSwitcher)
-// // toggle between dark and light mode
-// function themeSwitcher() {
-//     const theme = localStorage.getItem('theme') || 'dark';
-
-//     // element.dataset.mode
-//     if (theme === 'dark') {
-//         localStorage.setItem('theme', 'light');
-//         darkAndLightBtn.innerHTML = `<i class="fa-solid fa-sun"></i>
-//         Light Mode`;
-//     } else {
-//         localStorage.setItem('theme', 'dark');
-//         darkAndLightBtn.innerHTML = `<i class="fa-solid fa-moon"></i>Dark Mode`;
-//     }
-
-//     // change theme according to mode
-//     themeChecker();
-// }
-
-// // it will check whether user is in dark or light mode and change theme according to it
-// function themeChecker() {
-//     const theme = localStorage.getItem('theme') || 'dark';
-//     const darkElement = document.querySelectorAll('[data-mode-element]');
-//     darkAndLightBtn.style.background = 'none';
-//     elementsWithDarkMode.forEach((element) => {
-//         if (theme === 'dark') {
-//             element.classList.add('theme');
-//             darkElement.forEach((ele) => {
-//                 ele.classList.add('darkElementColor');
-//             });
-//         } else {
-//             element.classList.remove('theme');
-//             darkElement.forEach((ele) => {
-//                 ele.classList.remove('darkElementColor');
-//             });
-//         }
-//     })
-// }
-
-// // call the themeChecker func to initially load theme
-// themeChecker();
 
 // region select
 regions.forEach((region) => {
@@ -567,4 +558,5 @@ scrollToTopBtn.onclick = function () {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 };
+
 
