@@ -232,6 +232,8 @@ countriesFlags.forEach((flag) => {
         // details 
         const details = countryDetails.children[1];
         const extraDetails = information.querySelectorAll('[data-detail="more"]');
+        // prevent scrolling in body
+        document.body.classList.add('overflow-y-hidden');
         information.classList.remove('countries');
         // countrySec.classList.add('fullscreen', 'z-50', 'justify-center');
         information.classList.add('fullscreen', 'z-50', 'px-10');
@@ -273,9 +275,11 @@ backBtns.forEach((btn) => {
         // details 
         const details = countryDetails.children[1];
         const extraDetails = information.querySelectorAll('[data-detail="more"]');
+        // let scrolling in body
+        document.body.classList.remove('overflow-y-hidden');
         information.classList.add('countries');
         // countrySec.classList.remove('fullscreen', 'justify-center');
-        information.classList.remove('fullscreen', 'px-10');
+        information.classList.remove('fullscreen', 'px-10', 'overscroll-none');
         backBtn.classList.remove('top-28', 'absolute');
         information.classList.remove('flex', 'lg:items-center', 'pt-[12rem]', 'overflow-scroll');
         details.classList.remove('flex', 'justify-between', 'items-baseline');
@@ -545,12 +549,12 @@ function getSuggestionValue(suggestions) {
 
 
 // scroll to top btn logic
-// When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function () {
     const informationElements = document.querySelectorAll(".country-information");
+    // an array of country-information element's
     const informationArray = [...informationElements];
 
-    // check any of the img has fullscreen classs 
+    // check any of the country-information element has fullscreen classs 
     const hasFullScreenClass = informationArray.find((infoElement) => {
         if (infoElement.classList.contains("fullscreen")) {
             return true;
@@ -558,16 +562,13 @@ window.onscroll = function () {
     })
 
     if (hasFullScreenClass) {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            // if it is fullscreen it doesn't need scroll btn
-            scrollToTopBtn.classList.add('hidden')
-        } else {
-            scrollToTopBtn.classList.add('hidden');
-        }
+        // when country-information element is fullscreen it doesn't need scroll btn
+        scrollToTopBtn.classList.add('hidden');
     } else {
+        // handle scroll btn 
+        // When the user scrolls down 20px from the top of the document, show the button else hide it
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            // if it is fullscreen it doesn't need scroll btn
-            scrollToTopBtn.classList.remove('hidden')
+            scrollToTopBtn.classList.remove('hidden');
         } else {
             scrollToTopBtn.classList.add('hidden');
         }
