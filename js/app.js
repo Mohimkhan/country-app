@@ -279,7 +279,7 @@ backBtns.forEach((btn) => {
         document.body.classList.remove('overflow-y-hidden');
         information.classList.add('countries');
         // countrySec.classList.remove('fullscreen', 'justify-center');
-        information.classList.remove('fullscreen', 'px-10', 'overscroll-none');
+        information.classList.remove('fullscreen', 'px-10');
         backBtn.classList.remove('top-28', 'absolute');
         information.classList.remove('flex', 'lg:items-center', 'pt-[12rem]', 'overflow-scroll');
         details.classList.remove('flex', 'justify-between', 'items-baseline');
