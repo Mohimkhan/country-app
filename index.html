@@ -11,7 +11,7 @@
     <link rel="icon" href="./design/mobile-design-detail-dark.jpg" type="image/icon type">
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&family=Poppins:wght@400;500;600;700;800;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -26,44 +26,43 @@
     <script type="module" src="./js/app.js" defer></script>
 </head>
 
-<body class="font-nunito">
+<body class="font-poppins">
     <!-- header section starts -->
-    <header data-mode-element="true"
-        class="flex items-center justify-between sticky top-0 px-10 z-[100] h-20 bg-white-700 shadow shadow-grey-50 dark:darkElementColor">
+    <header
+        class="flex items-center justify-between sticky top-0 px-10 z-[100] h-20 bg-white-700 shadow shadow-grey-50 dark:darkElementColor text-black font-bold">
         <h2>Where in the world?</h2>
         <button type="button" class="flex justify-center items-center gap-2" data-mode="dark" id="ColorSwitchBtn"><i
                 class="fa-solid fa-moon"></i>Dark Mode</button>
     </header>
     <!-- main content starts -->
-    <main data-mode="dark" class="px-10 bg-dark-gray-400 min-h-screen dark:theme">
+    <main class="px-10 bg-dark-gray-400 min-h-screen dark:theme text-black">
         <!-- search and filter section starts -->
         <section class="flex justify-between items-baseline flex-wrap gap-4 py-9" id="filter">
-            <div data-mode-element="true" id="searchBox"
+            <div id="searchBox"
                 class="search-section bg-white-700 shadow shadow-grey-50 rounded-lg flex justify-start items-center gap-5 p-4 w-[40rem] cursor-text relative dark:darkElementColor">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input data-mode-element="true" type="search" name="search"
-                    class="rounded-md py-1 pl-2 w-full  dark:darkElementColor" id="searchCountry"
-                    placeholder="Search for a country...">
+                <input type="search" name="search" class="rounded-md py-1 pl-2 w-full bg-white dark:darkElementColor"
+                    id="searchCountry" placeholder="Search for a country...">
                 <!-- suggestions lists -->
-                <ul id="suggestions" data-mode-element="true"
+                <ul id="suggestions"
                     class="bg-white-700 shadow shadow-grey-50 rounded-lg  w-full h-auto absolute top-36 left-0 px-14 py-2 hidden 2md:top-20 max-h-[40vh] overflow-y-scroll  dark:darkElementColor z-[1000]">
                 </ul>
             </div>
             <div class="">
                 <ul class="relative" id="filterUl">
-                    <li data-mode-element="true"
+                    <li
                         class="bg-white-700 shadow shadow-grey-50  flex justify-between items-center rounded-lg gap-5 p-4 w-[15rem]  dark:darkElementColor">
                         Filter by Region <i class="fa-solid fa-angle-down transition-all rotate-180 cursor-pointer"
                             id="filterIcon"></i></li>
-                    <ul data-mode-element="true" class="bg-white-700 p-4 rounded-lg absolute w-full mt-3
-                        shadow shadow-grey-50 top-[-9999px] regions  dark:darkElementColor z-50">
-                        <li class="cursor-pointer hover:font-bold">Africa</li>
-                        <li class="cursor-pointer hover:font-bold">America</li>
-                        <li class="cursor-pointer hover:font-bold">Asia</li>
-                        <li class="cursor-pointer hover:font-bold">Europe</li>
-                        <li class="cursor-pointer hover:font-bold">Oceania</li>
-                        <li class="cursor-pointer hover:font-bold">Antarctic</li>
-                        <li class="cursor-pointer hover:font-bold">Unselect</li>
+                    <ul class="bg-white-700 p-4 rounded-lg absolute w-full mt-3
+                        shadow shadow-grey-50 top-[-9999px]  dark:darkElementColor z-50" id="regionContainer">
+                        <li class="cursor-pointer hover:dark:bg-slate-600 hover:bg-gray-300">Africa</li>
+                        <li class="cursor-pointer hover:dark:bg-slate-600 hover:bg-gray-300">America</li>
+                        <li class="cursor-pointer hover:dark:bg-slate-600 hover:bg-gray-300">Asia</li>
+                        <li class="cursor-pointer hover:dark:bg-slate-600 hover:bg-gray-300">Europe</li>
+                        <li class="cursor-pointer hover:dark:bg-slate-600 hover:bg-gray-300">Oceania</li>
+                        <li class="cursor-pointer hover:dark:bg-slate-600 hover:bg-gray-300">Antarctic</li>
+                        <li class="cursor-pointer hover:dark:bg-slate-600 hover:bg-gray-300">Unselect</li>
                     </ul>
                 </ul>
             </div>
@@ -71,51 +70,27 @@
         <!-- showing results -->
         <section id="showResult"></section>
         <!-- countrys section starts -->
+        <!-- <a href="./country.html">another page</a> -->
         <section class="flex items-baseline justify-center flex-wrap gap-16" id="countries">
-            <!-- <div data-mode-element="true" class="country-information lg:flex-row flex-col rounded countries items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden">
-                <button data-mode="dark" type="button"
-                    class="hidden backBtn top-28 px-8 py-2 bg-white-700 shadow-sm shadow-dark-gray-700 rounded-lg"
-                    data-detail="more" onclick="backBtn(this)"><i class="fa-solid fa-arrow-left-long"></i>Back</button>
-                <div class="country-image justify-center lg:justify-start lg:basis-1/2">
-                    <img data-src="https://flagcdn.com/w320/sv.png" alt="argentina" class="lazyload"
-                        onclick="flags(this)">
-                </div>
-                <div class="country-details basis-1/2 flex-col pl-5 pb-10 shadow-lg shadow-grey-50">
-                    <h1 class="text-3xl my-6"><strong>Belgium</strong></h1>
-                    <div class="details gap-8 flex-col sm:flex-row lg:gap-40">
-                        <div class="main-details">
-                            <p class="hidden" data-detail="more"><strong>Native Name: </strong><span
-                                    class="text-dark-gray-700">Belgia</span></p>
-                            <p><strong>Population: </strong><span class="text-dark-gray-700">34363636</span></p>
-                            <p> <strong>Region: </strong><span class="text-dark-gray-700">Europe</span>
-                            </p>
-                            <p class="hidden" data-detail="more"> <strong>Sub Region:</strong><span
-                                    class="text-dark-gray-700">Western Europe</span></p>
-                            <p>
-                                <strong>Capital: </strong><span class="text-dark-gray-700">Brussels</span>
-                            </p>
-                        </div>
-                        <div class="additional-details hidden" data-detail="more">
-                            <p><strong>Top Level Domain:</strong><span class="text-dark-gray-700">.be</span></p>
-                            <p><strong>Currencies:</strong><span class="text-dark-gray-700">Euro</span>
-                            </p>
-                            <p><strong>Languages:</strong><span class="text-dark-gray-700">Dutch,</span> <span
-                                    class="text-dark-gray-700">French,</span>
-                                <span class="text-dark-gray-700">German</span>
-                            </p>
+            <!-- country-information here -->
+            <template>
+                <div class="country-information rounded countries items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden lg:flex-row flex-col dark:darkElementColor shadow-[0px_0px_14px_rgba(0,0,0,0.2)] shadow-grey-50 scale-1 hover:scale-110 transition-transform transform-gpu">
+                    <div class="country-image">
+                        <a href="../pages/country.html?name=${country?.name?.common}"><img data-src="" alt="" class="lazyload hover:contrast-[1.5] opacity-0"></a>
+                    </div>
+                    <div class="country-details flex-col pl-5 pb-10">
+                        <h1 class="text-3xl my-6"><strong class="heading"></strong></h1>
+                        <div class="details gap-8 flex-col sm:flex-row lg:gap-40">
+                            <div class="main-details">
+                                <p><strong>Population: </strong><span class="text-dark-gray-700">value</span></p>
+                                <p> <strong>Region: </strong><span class="text-dark-gray-700 region">value</span></p>
+                                <p><strong>Capital: </strong><span class="text-dark-gray-700">value</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <p class="mt-10 hidden BorderCountry flex items-center flex-wrap gap-2 pb-[5rem] lg:pb-0" data-detail="more">
-                        <strong>Border Countries:</strong>
-                        <span
-                            class="text-dark-gray-700 px-8 py-2 bg-white-700 shadow-sm shadow-dark-gray-700 rounded-md">France,
-                        </span><span
-                            class="text-dark-gray-700 px-8 py-2 bg-white-700 shadow-sm shadow-dark-gray-700 rounded-md">Germany,
-                        </span><span
-                            class="text-dark-gray-700 px-8 py-2 bg-white-700 shadow-sm shadow-dark-gray-700 rounded-md">Netherland</span>
-                    </p>
                 </div>
-            </div> -->
+            </template>
         </section>
         <!-- scroll to top button -->
         <button id="scroll-to-top-btn"

@@ -3,6 +3,9 @@
 @tailwind utilities;
 /* Custom styles */
 :root {
+   /* color preferences */
+   color-scheme: light dark;
+   /* base colors */
    --clr-yellow: yellow;
    --dark-blue: hsl(209, 23%, 22%);
    --very-dark-blue: hsl(204, 2%, 54%);
@@ -11,17 +14,9 @@
    --very-light-gray: hsl(0, 0%, 98%);
    --dark-element: hsl(207, 26%, 17%);
    --white: hsl(0, 0%, 100%);
-   /* - Dark Blue (Dark Mode Elements): hsl(209, 23%, 22%)
-    - Very Dark Blue (Dark Mode Background): hsl(207, 26%, 17%)
-    - Very Dark Blue (Light Mode Text): hsl(200, 15%, 8%)
-    - Dark Gray (Light Mode Input): hsl(0, 0%, 52%)
-    - Very Light Gray (Light Mode Background): hsl(0, 0%, 98%)
-    - White (Dark Mode Text & Light Mode Elements): hsl(0, 0%, 100%) */
 }
 
 img {
-   /* width: 270px;
-    height: 150px; */
    height: 12rem;
    object-fit: cover;
    aspect-ratio: 1 / 0.5;
@@ -41,46 +36,9 @@ img {
 }
 
 .countries {
-   /* width: 21.2%;
-    height: 21.2%; */
    max-width: 300px;
    width: 269px;
 }
-
-/* .country-information {
-    display: flex;
-    justify-content: space-between;
-    gap: 50px;
-}
-
-.country-details,
-.country-image {
-    flex-basis: 50%;
-}
-
-
-.details {
-    display: flex;
-    justify-content: space-between;
-    align-items:baseline;
-}
-*/
-
-/* .theme {
-   color: var(--white);
-   background-color: var(--dark-element);
-   transition: all 200ms ease-in-out;
-} */
-
-/* .darkElementColor {
-   background-color: var(--dark-blue);
-   color: var(--white);
-   transition: color 200ms ease-in-out, background 200ms ease-in-out;
-} */
-
-/* .darkModeTextColor {
-
-} */
 
 .blue {
    color: blue;
@@ -90,6 +48,12 @@ img {
 .backBtn {
    position: absolute;
    top: 111px;
+}
+
+.error {
+   font-weight: bolder;
+   font-size: clamp(1.5rem, 5vw, 2.5rem);
+   transform: translateY(40vh);
 }
 
 /* Loader animation css */

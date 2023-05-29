@@ -2,10 +2,10 @@
 
 # How to run this project locally
 
-### 1.Setup environment
+### 1. Setup environment
 
 ```
-  yarn
+yarn
 ```
 
 ### 2. Start the project on local server
