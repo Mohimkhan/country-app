@@ -16,3 +16,7 @@
 # Avoid unused files
 node_modules
 README-template.md
+random.js
+style-guide.md
+Currencies.js
+Languages.js
