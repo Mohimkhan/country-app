@@ -3,7 +3,6 @@ const searchParams = new URLSearchParams(window.location.search);
 const countryName = searchParams.get('name');
 const countriesDiv = document.querySelector("#countries");
 
-
 // Function to fetch specific data from the server based on entries and type
 const getDataByEntriesAndType = ({ entries, type }) => {
   // Create an object to store keys of different types

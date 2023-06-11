@@ -21,9 +21,6 @@ const suggestions = document.querySelector('#suggestions');
 const showResult = document.querySelector('#showResult');
 const scrollToTopBtn = document.querySelector("#scroll-to-top-btn");
 
-
-
-
 // so that user can search right away
 searchInput.focus();
 
@@ -40,7 +37,8 @@ async function fetchData(url, cacheObject = { cache: "no-store" }) {
                 throw new Error('Network response was not ok.');
             }
             const data = await response.json();
-            return data;
+            // update the UI
+            updateCountriesToUI(data);
         } else {
             throw new Error('Invalid URL or cache object provided.');
         }
@@ -50,15 +48,8 @@ async function fetchData(url, cacheObject = { cache: "no-store" }) {
     }
 }
 
-// Fetching data (countries information) from the server
-try {
-    const data = await fetchData(url, { cache: 'no-cache' });
-    // Process the fetched data here
-    updateCountriesToUI(data);
-} catch (error) {
-    // Handle any errors that occurred during the fetch request
-    console.error('Error while fetching data:', error);
-}
+// call the func to fetch data from server
+fetchData(url, { cache: 'no-cache' });
 
 // Function to fetch specific data from the server based on entries and type
 const getDataByEntriesAndType = ({ entries, type }) => {
@@ -124,7 +115,7 @@ function updateCountriesToUI(Countries) {
     Countries.filter(Boolean).forEach((country) => {
         countriesHtml += `                        <div class="country-information rounded countries items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden lg:flex-row flex-col dark:darkElementColor shadow-[0px_0px_14px_rgba(0,0,0,0.2)] shadow-grey-50 scale-1 hover:scale-110 transition-transform transform-gpu">
                     <div class="country-image">
-                        <a href="../pages/country.html?name=${country?.name?.common}"><img data-src=${country?.flags?.png} alt=${country?.flags?.alt || country?.name?.common || 'Not Found'} class="lazyload hover:contrast-[1.5] opacity-0"></a>
+                        <a href="../pages/country.html?name=${country?.name?.common}"><img data-src=${country?.flags?.png} src=${country?.flags?.png} alt=${country?.flags?.alt || country?.name?.common || 'Not Found'} class="lazyload hover:contrast-[1.5] opacity-0" /></a>
                     </div>
                     <div class="country-details flex-col pl-5 pb-10">
                         <h1 class="text-3xl my-6"><strong class="heading">${country?.name?.common || 'Not Found'}</strong></h1>
@@ -139,18 +130,16 @@ function updateCountriesToUI(Countries) {
                     </div>
                 </div>`;
     });
+
     countriesSec.innerHTML = countriesHtml;
 }
 
-// small animation on image load
-const countriesFlags = document.querySelectorAll('.country-image img');
-countriesFlags.forEach((flag) => {
-    flag.addEventListener('load', () => {
-        // Apply the animation to the image once it has finished loading
-        flag.classList.add('opacity-[1]');
-        flag.classList.add('transition-opacity', 'ease-in-out', 'delay-200');
-    })
-})
+// // small animation on image load
+// function loadingEffect(flag) {
+//     // Apply the animation to the image once it has finished loading
+//     flag.classList.add('opacity-[1]');
+//     flag.classList.add('transition-opacity', 'ease-in-out', 'delay-200');
+// }
 
 // filter icon animation
 filterUl.addEventListener('click', () => {
@@ -400,5 +389,3 @@ scrollToTopBtn.onclick = function () {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 };
-
-
