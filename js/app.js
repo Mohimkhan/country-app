@@ -115,7 +115,7 @@ function updateCountriesToUI(Countries) {
     Countries.filter(Boolean).forEach((country) => {
         countriesHtml += `                        <div class="country-information rounded countries items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden lg:flex-row flex-col dark:darkElementColor shadow-[0px_0px_14px_rgba(0,0,0,0.2)] shadow-grey-50 scale-1 hover:scale-110 transition-transform transform-gpu">
                     <div class="country-image">
-                        <a href="../pages/country.html?name=${country?.name?.common}"><img data-src=${country?.flags?.png} src=${country?.flags?.png} alt=${country?.flags?.alt || country?.name?.common || 'Not Found'} class="lazyload hover:contrast-[1.5] opacity-0" /></a>
+                        <a href="../pages/country.html?name=${country?.name?.common}"><img data-src=${country?.flags?.png} src=${country?.flags?.png} alt=${country?.flags?.alt || country?.name?.common || 'Not Found'} class="lazyload hover:contrast-[1.5] opacity-0" onload="loadingEffect(this);" /></a>
                     </div>
                     <div class="country-details flex-col pl-5 pb-10">
                         <h1 class="text-3xl my-6"><strong class="heading">${country?.name?.common || 'Not Found'}</strong></h1>
@@ -134,12 +134,12 @@ function updateCountriesToUI(Countries) {
     countriesSec.innerHTML = countriesHtml;
 }
 
-// // small animation on image load
-// function loadingEffect(flag) {
-//     // Apply the animation to the image once it has finished loading
-//     flag.classList.add('opacity-[1]');
-//     flag.classList.add('transition-opacity', 'ease-in-out', 'delay-200');
-// }
+// small animation on image load
+function loadingEffect(flag) {
+    // Apply the animation to the image once it has finished loading
+    flag.classList.add('opacity-[1]');
+    flag.classList.add('transition-opacity', 'ease-in-out', 'delay-200');
+}
 
 // filter icon animation
 filterUl.addEventListener('click', () => {
