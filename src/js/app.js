@@ -156,7 +156,8 @@ function loadingEffect() {
     // Apply the animation to the image once it has finished loading
     flags.forEach((flag) => {
         flag.addEventListener('load', () => {
-            flag.classList.add('opacity-[1]');
+            flag.classList.remove('opacity-0');
+            flag.classList.add('opacity-100');
             flag.classList.add('transition-opacity', 'ease-in-out', 'delay-200');
         })
     })
