@@ -1,8 +1,14 @@
 // Variables
 const darkAndLightBtn = document.querySelector("#ColorSwitchBtn");
+const faviconElement = document.getElementById('favicon');
+import faviconLight from '../assets/mobile-design-detail-light.jpg';
+import faviconDark from '../assets/mobile-design-detail-dark.jpg';
 
 // Dark and light mode implementation
 darkAndLightBtn.addEventListener('click', themeSwitcher);
+
+// initial favicon 
+faviconElement.href = faviconDark;
 
 // Toggle between dark and light mode
 function themeSwitcher() {
@@ -31,10 +37,12 @@ function themeChecker() {
     if (theme === 'dark' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         if (!document.documentElement.classList.contains('dark')) {
             document.documentElement.classList.add('dark');
+            faviconElement.href = faviconDark;
         }
     } else {
         if (document.documentElement.classList.contains('dark')) {
             document.documentElement.classList.remove('dark');
+            faviconElement.href = faviconLight;
         }
     }
 }
