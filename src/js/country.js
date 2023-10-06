@@ -71,7 +71,7 @@ const fetchData = async () => {
     // html template
     let htmlData = `
         <div class="country-information rounded fullscreen z-50 px-10 flex lg:items-center pt-[12rem] items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden lg:flex-row flex-col dark:darkElementColor shadow-[0px_0px_14px_rgba(0,0,0,0.2)] shadow-grey-50 overflow-y-scroll scroll-smooth">
-        <a href="../index.html"  type="button"
+        <a href="../../index.html"  type="button"
         class="backBtn top-28 absolute px-8 py-2 bg-white-700 shadow-sm shadow-dark-gray-700 rounded-lg  dark:darkElementColor"
             ><i class="fa-solid fa-arrow-left-long"></i>Back</a>
             <div class="country-image flex lg:basis-1/2">
