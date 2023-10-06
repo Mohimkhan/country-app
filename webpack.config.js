@@ -36,16 +36,28 @@ module.exports = {
             {
                 test: /\.js$/i,
                 exclude: /node_modules/,
-                use:{
+                use: {
                     loader: 'babel-loader',
-                    options:{
-                        presets:['@babel/preset-env']
+                    options: {
+                        presets: ['@babel/preset-env']
                     }
                 },
-            }
+            },
+            {
+                test: /\.(png|ico|jpg|jpeg|gif|svg)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]', // Keep the original file name and extension
+                            outputPath: 'images', // Output directory for images
+                        },
+                    },
+                ],
+            },
         ],
     },
-    plugins:[
+    plugins: [
         new htmlWebpackPlugin({
             filename: 'index.html',
             template: './index.html',
@@ -56,5 +68,5 @@ module.exports = {
             template: './src/pages/country.html',
             chunks: ['country', 'DarkAndLightMode', 'lazyLoad'], // Include specific chunks
         }),
-    ] 
+    ]
 }
