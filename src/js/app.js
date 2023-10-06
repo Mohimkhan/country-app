@@ -60,7 +60,7 @@ function updateCountriesToUI(Countries) {
     Countries.filter(Boolean).forEach((country) => {
         countriesHtml += `                        <div class="country-information rounded countries items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden lg:flex-row flex-col dark:darkElementColor shadow-[0px_0px_14px_rgba(0,0,0,0.2)] shadow-grey-50 scale-1 hover:scale-110 transition-transform transform-gpu">
                     <div class="country-image">
-                        <a href="../../dist/pages/country.html?name=${country?.name?.common}"><img data-src=${country?.flags?.png} alt=${country?.flags?.alt || country?.name?.common || 'Not Found'} class="lazyload hover:contrast-[1.5] opacity-0" /></a>
+                        <a href="../pages/country.html?name=${country?.name?.common}"><img data-src=${country?.flags?.png} alt=${country?.flags?.alt || country?.name?.common || 'Not Found'} class="lazyload hover:contrast-[1.5] opacity-0" /></a>
                     </div>
                     <div class="country-details flex-col pl-5 pb-10">
                         <h1 class="text-3xl my-6"><strong class="heading">${country?.name?.common || 'Not Found'}</strong></h1>
@@ -93,67 +93,10 @@ async function fetchDataAndUpateUI() {
 }
 
 fetchDataAndUpateUI();
-// fetchData(url, { cache: 'no-cache' });
 
-// Function to fetch specific data from the server based on entries and type
-// const getDataByEntriesAndType = ({ entries, type }) => {
-//     // Create an object to store keys of different types
-//     const obj = {
-//         currencieKeys: [], // Array to store currency keys
-//         languageKeys: []  // Array to store language keys
-//     };
-
-//     switch (type) {
-//         case "currencie":
-//             // Loop through each key in entries
-//             for (const key in entries) {
-//                 // Add currency keys to the currencieKeys array
-//                 obj.currencieKeys.push(key);
-//             }
-
-//             // Remove duplicate currency keys from the array
-//             const uniqueCurrencieKeys = [...new Set(obj.currencieKeys)];
-
-//             // Filter out invalid keys and map the valid ones to HTML spans
-//             return uniqueCurrencieKeys
-//                 .filter(Boolean)
-//                 .map((currencyKey) => {
-//                     if (entries.hasOwnProperty(currencyKey)) {
-//                         // Return HTML span with currency name
-//                         return `<span class="text-dark-gray-700">${entries[currencyKey].name + ", "}</span>`;
-//                     }
-//                 })
-//                 .join('') || 'Not found';
-
-//         case "language":
-//             // Loop through each key in entries
-//             for (const key in entries) {
-//                 // Add language keys to the languageKeys array
-//                 obj.languageKeys.push(key);
-//             }
-
-//             // Remove duplicate language keys from the array
-//             const uniqueLanguageKeys = [...new Set(obj.languageKeys)];
-
-//             // Filter out invalid keys and map the valid ones to HTML spans
-//             return uniqueLanguageKeys
-//                 .filter(Boolean)
-//                 .map((languageKey) => {
-//                     if (entries.hasOwnProperty(languageKey)) {
-//                         // Return HTML span with language name
-//                         return `<span class="text-dark-gray-700">${entries[languageKey] + ", "}</span>`;
-//                     }
-//                 })
-//                 .join('') || `<span class="text-dark-gray-700">Not Found</span>`;
-
-//         default:
-//             return entries;
-//     }
-// };
-
-// small animation on image load
+// small effect on image load
 function loadingEffect() {
-    // Apply the animation to the image once it has finished loading
+    // Apply the effect to the image once it has finished loading
     flags.forEach((flag) => {
         flag.addEventListener('load', () => {
             flag.classList.remove('opacity-0');
@@ -161,39 +104,10 @@ function loadingEffect() {
             flag.classList.add('transition-opacity', 'ease-in-out', 'delay-200');
         })
     })
-    // flag.classList.add('opacity-[1]');
-    // flag.classList.add('transition-opacity', 'ease-in-out', 'delay-200');
 }
 
-// // show all the information in the UI
-// function updateCountriesToUI(Countries) {
-//     // initial value
-//     let countriesHtml = '';
-//     // Build the HTML string for each country
-//     Countries.filter(Boolean).forEach((country) => {
-//         countriesHtml += `                        <div class="country-information rounded countries items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden lg:flex-row flex-col dark:darkElementColor shadow-[0px_0px_14px_rgba(0,0,0,0.2)] shadow-grey-50 scale-1 hover:scale-110 transition-transform transform-gpu">
-//                     <div class="country-image">
-//                         <a href="../pages/country.html?name=${country?.name?.common}"><img data-src=${country?.flags?.png} alt=${country?.flags?.alt || country?.name?.common || 'Not Found'} class="lazyload hover:contrast-[1.5] opacity-0" /></a>
-//                     </div>
-//                     <div class="country-details flex-col pl-5 pb-10">
-//                         <h1 class="text-3xl my-6"><strong class="heading">${country?.name?.common || 'Not Found'}</strong></h1>
-//                         <div class="details gap-8 flex-col sm:flex-row lg:gap-40">
-//                             <div class="main-details">
-//                                 <p><strong>Population: </strong><span class="text-dark-gray-700">${country?.population.toLocaleString("en-IN") || 'Not Found'} </span></p>
-//                                 <p> <strong>Region: </strong><span class="text-dark-gray-700 region"> ${country?.region || 'Not Found'}</span></p>
-//                                 <p><strong>Capital: </strong><span class="text-dark-gray-700">${country?.capital || 'Not Found'}</span>
-//                                 </p>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>`;
-//     });
 
-//     countriesSec.innerHTML = countriesHtml;
-// }
-
-
-// filter icon animation
+// filter icon effect
 filterUl.addEventListener('click', () => {
     // to hide/show
     regionContainer.classList.toggle('top-[-9999px]');
@@ -296,7 +210,6 @@ searchInput.addEventListener('input', () => {
 
 // search for the country with name and region
 function search() {
-    console.log(`search`);
     const allTheCountryDetails = document.querySelectorAll('.country-information .country-details');
     // validate the input
     const searchValue = searchInput.value ? searchInput.value.toLowerCase() : "";
