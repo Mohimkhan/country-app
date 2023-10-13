@@ -9,6 +9,7 @@ module.exports = {
         DarkAndLightMode: path.resolve(__dirname, './src/js/DarkAndLightMode.js'),
         lazyLoad: path.resolve(__dirname, './src/js/lazyLoad.js'),
         preloader: path.resolve(__dirname, './src/js/preloader.js'),
+        // IntersectionObserver: path.resolve(__dirname, './src/js/IntersectionObserver.js'),
     },
     output: {
         path: path.resolve(__dirname, './dist'),
