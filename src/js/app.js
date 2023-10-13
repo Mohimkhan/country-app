@@ -21,35 +21,33 @@ const searchInput = document.querySelector('#searchCountry');
 const suggestions = document.querySelector('#suggestions');
 const showResult = document.querySelector('#showResult');
 const scrollToTopBtn = document.querySelector("#scroll-to-top-btn");
+const { scrollAnimation } = require('./intersectionObserver');
+const countryInformationTemplate = document.querySelector('#country-information-template');
 let flags;
 
 
 // so that user can search right away
 searchInput.focus();
-
+// generating some element from template so that skeleton effect can take place
+for (let i = 0; i < 8; i++) {
+    countriesSec.append(countryInformationTemplate.content.cloneNode(true));
+}
 // func to fetch data from the server
 async function fetchData(url, cacheObject = { cache: "no-store" }) {
-    try {
-        // Validate the inputs
-        const URL = typeof url === 'string' ? url : null;
-        const cacheObj = typeof cacheObject === 'object' && cacheObject.hasOwnProperty('cache') ? cacheObject : null;
+    // Validate the inputs
+    const URL = typeof url === 'string' ? url : null;
+    const cacheObj = typeof cacheObject === 'object' && cacheObject.hasOwnProperty('cache') ? cacheObject : null;
 
-        if (URL && cacheObj) {
-            const response = await fetch(URL, cacheObj);
-            if (!response.ok) {
-                throw new Error('Network response was not ok.');
-            }
-            const data = await response.json();
-
-            return data;
-            // // update the UI
-            // updateCountriesToUI(data);
-        } else {
-            throw new Error('Invalid URL or cache object provided.');
+    if (URL && cacheObj) {
+        const response = await fetch(URL, cacheObj);
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
         }
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        throw error;
+        const data = await response.json();
+
+        return data;
+    } else {
+        throw new Error('Invalid URL or cache object provided.');
     }
 }
 // show all the information in the UI
@@ -81,18 +79,16 @@ function updateCountriesToUI(Countries) {
     flags = document.querySelectorAll('.country-image img');
 }
 // call the func to fetch data from server update the UI
-async function fetchDataAndUpateUI() {
-    try {
-        const data = await fetchData(url, { cache: 'no-cache' });
-        updateCountriesToUI(data);
-        loadingEffect();
+try {
+    const data = await fetchData(url, { cache: 'force-cache' });
+    updateCountriesToUI(data);
+    loadingEffect();
 
-    } catch (err) {
-        throw new Error("Something is wrong");
-    }
+} catch (err) {
+    throw new Error("Something is wrong");
 }
 
-fetchDataAndUpateUI();
+
 
 // small effect on image load
 function loadingEffect() {
@@ -359,3 +355,9 @@ scrollToTopBtn.onclick = function () {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 };
+
+// animation 
+const countries = document.querySelectorAll('.country-information');
+scrollAnimation(countries, {
+    threshold: 0.7,
+});
