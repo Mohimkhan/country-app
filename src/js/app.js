@@ -1,11 +1,4 @@
-// 'use strict';
-
-/**
- * todo box-shadow: 0px 0px 14px rgba(0,0,0,0.2); on information div was good
- * todo if possible add infinite scrolling
- * todo fix font problem asap
- */
-
+'use strict';
 /**
  * * Variable's
  */
@@ -50,11 +43,11 @@ async function fetchData(url, cacheObject = { cache: "no-store" }) {
         throw new Error('Invalid URL or cache object provided.');
     }
 }
-// show all the information in the UI
+// show all the country information in the UI
 function updateCountriesToUI(Countries) {
     // initial value
     let countriesHtml = '';
-    // Build the HTML string for each country
+    // build the HTML string for each country
     Countries.filter(Boolean).forEach((country) => {
         countriesHtml += `                        <div class="country-information rounded countries items-stretch lg:pt-0 lg:justify-between lg:overflow-hidden lg:flex-row flex-col dark:darkElementColor shadow-[0px_0px_14px_rgba(0,0,0,0.2)] shadow-grey-50 scale-1 hover:scale-110 transition-transform transform-gpu">
                     <div class="country-image">
@@ -78,12 +71,11 @@ function updateCountriesToUI(Countries) {
 
     flags = document.querySelectorAll('.country-image img');
 }
-// call the func to fetch data from server update the UI
+// fetch data from server and update the UI
 try {
     const data = await fetchData(url, { cache: 'force-cache' });
     updateCountriesToUI(data);
     loadingEffect();
-
 } catch (err) {
     throw new Error("Something is wrong");
 }
@@ -111,7 +103,7 @@ filterUl.addEventListener('click', () => {
     filterIcon.classList.toggle('rotate-180');
 });
 
-// region select
+// select region and search country within the region
 listOfRegions.forEach((region) => {
     region.addEventListener('click', (e) => {
         // removing the previous selected region
@@ -151,20 +143,26 @@ function autoSuggestions(match, Countries, selectedRegion) {
         // if country name is given and region is not selected then do this
         if (matchedCountryName && selectedRegion === 'Not Selected') {
             if (countryName.startsWith(matchedCountryName)) {
-                // get all the rest country name that were match
-                let restMatchedCountryName = countryName.slice(matchLength);
+                // Extract the remaining part of the country name that matches the user input.
+                // If the user types 'b' and there is a country called 'Bangladesh', 
+                // this will capture the portion of the country name that follows the match, 
+                // e.g., 'angladesh'.
+                let remainingCountryNameAfterMatch = countryName.slice(matchLength);
                 // generate suggestions 
-                suggestion += `<li class="suggestion cursor-pointer"><p class="sugPara hover:dark:bg-slate-600 hover:bg-gray-300">${matchedCountryName}<b>${restMatchedCountryName}</b></p></li>`;
+                suggestion += `<li class="suggestion cursor-pointer"><p class="sugPara hover:dark:bg-slate-600 hover:bg-gray-300">${matchedCountryName}<b>${remainingCountryNameAfterMatch}</b></p></li>`;
             }
         }
         // if country name is given and region is selected then do this
         if (matchedCountryName && selectedRegion !== 'Not Selected') {
             if (countryName.startsWith(matchedCountryName) && updatedRegion === selectedRegion) {
-                // get all the rest country name that were match
-                let restMatchedCountryName = countryName.slice(matchLength);
+                // Extract the remaining part of the country name that matches the user input.
+                // If the user types 'b' and there is a country called 'Bangladesh', 
+                // this will capture the portion of the country name that follows the match, 
+                // e.g., 'angladesh'.
+                let remainingCountryNameAfterMatch = countryName.slice(matchLength);
                 // generate suggestions 
                 suggestion += `<li class="suggestion cursor-pointer"><p class=
-                "hover:dark:bg-slate-600 hover:bg-gray-300 sugPara">${matchedCountryName}<b>${restMatchedCountryName}</b></p></li>`;
+                "hover:dark:bg-slate-600 hover:bg-gray-300 sugPara">${matchedCountryName}<b>${remainingCountryNameAfterMatch}</b></p></li>`;
             }
         }
     })
@@ -175,20 +173,19 @@ function autoSuggestions(match, Countries, selectedRegion) {
     getSuggestionValue(suggestions);
 }
 
-// get name from auto suggestion and search according to it
+// get country name from auto suggestions and search according to it
 function getSuggestionValue(suggestions) {
     const allTheSuggestions = suggestions.querySelectorAll('.sugPara');
 
     allTheSuggestions.forEach((sug) => {
         sug.addEventListener('click', (e) => {
-            console.log(e);
             const index = e.currentTarget.innerHTML.indexOf("<b>");
             // extracting the string before <b> tag
             const match = e.currentTarget.innerHTML.substring(0, index);
             // extracting the string after <b> (takes up 3 characters) tag
             // index + 3 is used because we want to get the text that comes after the <b> tag.
-            const restMatchedCountryName = e.currentTarget.innerHTML.substring(index + 3, e.currentTarget.innerHTML.indexOf("</b>"));
-            const fullCountryName = match + restMatchedCountryName;
+            const remainingCountryNameAfterMatch = e.currentTarget.innerHTML.substring(index + 3, e.currentTarget.innerHTML.indexOf("</b>"));
+            const fullCountryName = match + remainingCountryNameAfterMatch;
             // setting the value in searchInput so that we can get the desire country information
             searchInput.value = fullCountryName.trim();
             search();
@@ -218,7 +215,7 @@ function search() {
         // get the corresponding region name
         const region = document.querySelectorAll(".region")[index].textContent.trim().toLowerCase();
         const updatedRegion = region === "americas" ? "america" : region;
-        // get the corresponding country names
+        // get the corresponding country name
         const countryName = document.querySelectorAll(".heading")[index].textContent.toLowerCase();
 
         // if country name is given and region is not selected then do this
@@ -255,7 +252,6 @@ function search() {
 
         // if country name is given and region is also given then do this
         if (searchValue && selectedRegion !== 'Not Selected') {
-            // console.log(updatedRegion, selectedRegion);
             if (countryName.startsWith(searchValue) && updatedRegion === selectedRegion) {
                 // if previously hidden country has a match then show 
                 informationDiv.classList.remove('hidden');
@@ -288,12 +284,10 @@ function search() {
 
         // if only region is given then do this
         if (searchValue === "" && selectedRegion !== 'Not Selected') {
-            // console.log(updatedRegion, selectedRegion);
             // as there is no searchValue so showResult should be hidden
             showResult.innerHTML = "";
             // hide all the suggestions
             suggestions.classList.add('hidden');
-            // console.log(`Thriple yes`);
             if (updatedRegion === selectedRegion) {
                 // if previously hidden country has a match then show 
                 informationDiv.classList.remove('hidden');
@@ -307,7 +301,7 @@ function search() {
         if (searchValue === "" && selectedRegion === 'Not Selected') {
             // hide all the suggestions
             suggestions.classList.add('hidden');
-            // as there is no searchValue so showResult should be hidded
+            // as there is no searchValue so showResult should be hidden
             showResult.innerHTML = "";
             // show all the hidden countries (no match)
             informationDiv.classList.remove('hidden');
