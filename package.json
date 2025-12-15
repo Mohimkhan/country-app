@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "![Design preview for the REST Countries API with color theme switcher coding challenge](./design/desktop-preview.jpg)",
   "main": "index.js",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "serve": "webpack serve",
     "watch": "webpack --watch",
