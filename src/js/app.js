@@ -4,7 +4,7 @@
  */
 import '../css/style.css';
 const countriesSec = document.getElementById("countries");
-const url = "https://restcountries.com/v3.1/all";
+const url = "https://restcountries.com/v3.1/all?fields=name,flags,population,region,languages,capital";
 const filterUl = document.querySelector('#filterUl');
 const filterLi = document.querySelector('#filterUl li');
 const regionContainer = filterUl.querySelector('#regionContainer');
